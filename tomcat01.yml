@@ -1,0 +1,32 @@
+--- # Extract and donwload Tomcat
+- hosts: server2
+  user: test
+  sudo: yes
+  tasks:
+    - name: Stop tomcat services
+      command:  /usr/local/tomcat/apache-tomcat-7.0.75/bin/catalina.sh stop
+      register: result
+    - debug: var=result
+    - name: Remove older tomcat files
+      file: path=/usr/local/tomcat state=absent
+      register: result
+    - debug: var=result
+    - name: create tomcat directory
+      command: mkdir /usr/local/tomcat
+      register: result
+    - debug: var=result
+    - name: Download Tomcat 
+      command: chdir=/tmp wget http://redrockdigimark.com/apachemirror/tomcat/tomcat-7/v7.0.75/bin/apache-tomcat-7.0.75.tar.gz
+      register: result
+    - debug: var=result
+    - name: Unarchive tomcat files
+      unarchive: src=/tmp/apache-tomcat-7.0.75.tar.gz dest=/usr/local/tomcat copy=no
+      register: result
+    - debug: var=result
+    - name: Copy tomcat user xml file
+      copy: src=tomcat-users.xml dest=/usr/local/tomcat/apache-tomcat-7.0.75/conf/
+    - name: start services
+      command:  nohup /usr/local/tomcat/apache-tomcat-7.0.75/bin/catalina.sh version &
+      command: nohup /usr/local/tomcat/apache-tomcat-7.0.75/bin/catalina.sh start &
+      register: result
+    - debug: var=result

@@ -1,0 +1,8 @@
+--- # Include files from other 
+- hosts: webserver
+  user: test
+  sudo: yes
+  tasks:
+    - include: install.yml
+  handlers: 
+    - include: service.yml

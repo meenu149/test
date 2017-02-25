@@ -1,0 +1,8 @@
+--- # Encryption of ymal files
+- hosts: server3
+  user: test
+  sudo: yes
+  tasks:
+    - name: Deinstall Mysql 
+      service: name=mysql state=stopped
+

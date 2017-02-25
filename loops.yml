@@ -1,0 +1,21 @@
+--- # INstallting Webserver
+- hosts: webserver
+  user: test 
+  sudo: yes
+  vars_prompt:
+     - name: pkg
+       prompt: Enter the package name
+       private: no
+  tasks:
+     - name: Install httpd package
+       yum: name={{item}} state=installed
+       with_items:
+          - httpd
+          - curl
+          - lftp
+          - '{{pkg}}'
+          - '{{pkg2}}'
+     - name: Copy indec html file
+       copy: src=/home/test/playbook/index.html dest=/var/www/html/index.html
+     - name: Start hhtpd service
+       service: name=httpd state=started

@@ -1,0 +1,13 @@
+--- # INstallting Webserver
+- hosts: webserver 
+  user: test 
+  sudo: yes
+  tasks:
+     - name: Install httpd package
+       yum: name=httpd state=installed
+     - name: Copy indec html file
+       copy: src=/home/test/playbook/index.html dest=/var/www/html/index.html
+     - name: Start hhtpd service
+       service: name=httpd state=restarted
+       register: result
+     - debug: var=result

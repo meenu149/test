@@ -1,0 +1,13 @@
+--- #Install HTTPD on webserves
+- hosts: webserver
+  user: test
+  sudo: yes
+  vars:
+      pkg: httpd
+  tasks:
+     - name: Install package httpd on webserver
+       yum: name={{pkg}} state=installed
+     - name: Copy Index.html to websever
+       copy: src=/home/test/playbook/index.html dest=/var/www/html/index.html
+     - name: start the services
+       service: name=httpd state=started
