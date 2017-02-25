@@ -1,0 +1,7 @@
+--- # INstallting Webserver
+- hosts: server2
+  user: test 
+  sudo: yes
+  tasks:
+     - name: Create a file
+       template: src=abc.j2 dest=/etc/abc

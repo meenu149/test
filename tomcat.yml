@@ -1,0 +1,16 @@
+--- # Install tomcat oon Server2 and start Services
+- hosts: server2
+  user: test
+  sudo: yes
+  tasks:
+    - name: Download Tomcat
+      get_url: url=http://redrockdigimark.com/apachemirror/tomcat/tomcat-7/v7.0.75/bin/apache-tomcat-7.0.75.tar.gz dest=/tmp
+    - name: Create directory for tomcat
+      command: mkdir /usr/local/tomcat
+    - name: Extract tomcat
+      command: chdir=/tmp /bin/tar -xvf apache-tomcat-7.0.75.tar.gz
+    - name: Move apache to tomcat location
+      command: chdir=/tmp /bin/mv apache-tomcat-7.0.75 /usr/local/tomcat
+    - name: check tomcat version and start tomcat
+      command: nohup /usr/local/tomcat/apache-tomcat-7.0.75/bin/catalina.sh version &
+      command: nohup /usr/local/tomcat/apache-tomcat-7.0.75/bin/catalina.sh start &

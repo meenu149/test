@@ -1,0 +1,12 @@
+--- # INstallting Webserver
+- hosts: server2
+  user: test 
+  sudo: yes
+  tasks:
+     - name: Execute the script
+       script: ./abc.sh
+     - name: Create directory
+       command: mkdir sunil creates=/home/test/sunil
+       tags: create
+     - name: create a file
+       command: touch /home/test/sunil/file1
